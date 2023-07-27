@@ -3,7 +3,7 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from '@/components/Popper';
 
-import * as searchServices from '@/apiServices/searchServices';
+import * as searchServices from '@/services/searchService';
 import { SearchIcon } from '@/components/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDebounce } from '@/hooks';
@@ -14,35 +14,35 @@ import { useEffect, useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setsearchResult] = useState([]);
+    const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    const debounced = useDebounce(searchValue, 500);
+    const debouncedValue = useDebounce(searchValue, 500);
 
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!debounced.trim()) {
-            setsearchResult([]);
+        if (!debouncedValue.trim()) {
+            setSearchResult([]);
             return;
         }
 
         const fetchApi = async () => {
             setLoading(true);
 
-            const result = await searchServices.search(debounced);
-            setsearchResult(result);
+            const result = await searchServices.search(debouncedValue);
+            setSearchResult(result);
 
             setLoading(false);
         };
 
         fetchApi();
-    }, [debounced]);
+    }, [debouncedValue]);
 
     const handleClear = () => {
         setSearchValue('');
-        // setSearchResult([]);
+        setSearchResult([])
         inputRef.current.focus();
     };
 

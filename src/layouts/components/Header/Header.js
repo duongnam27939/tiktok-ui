@@ -14,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-import routesConfig from '@/config/routes'
+import config from '@/config'
 import Tippy from '@tippyjs/react';
 import Button from '@/components/Button';
 import Menu from '@/components/Popper/Menu';
@@ -58,7 +58,7 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-    const currentUser = true;
+    const currentUser = false;
     // Handle Logic
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -100,7 +100,7 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <Link to={routesConfig.home} className={cx('logo-link')}>
+                    <Link to={config.routes.home} className={cx('logo-link')}>
                         <img src={images.logo} alt="Tiktok" />
                     </Link>
                 </div>
